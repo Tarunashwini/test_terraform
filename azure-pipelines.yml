@@ -10,9 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: Validation stage
+- stage: TerraformValidationStage
   jobs:
-  - job: Validate-infra
+  - job: ValidateTerraformInfra
     continueOnError: false
     steps:
     - task: PublishBuildArtifacts@1

@@ -1,0 +1,87 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Validation stage
+  jobs:
+  - job: Validate-infra
+    continueOnError: false
+    steps:
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
+        ArtifactName: 'Terraform-manifest-out'
+        publishLocation: 'Container'
+    
+    - task: TerraformCLI@2
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
+        backendType: 'azurerm'
+        backendServiceArm: 'rakshitha-azure-connection'
+        backendAzureRmResourceGroupName: 'test_tarun_rg'
+        backendAzureRmStorageAccountName: 'testtarunstorageaccount'
+        backendAzureRmContainerName: 'test-tarun-container'
+        backendAzureRmKey: 'tarun-test-app-service.terraform.tfstate'
+        allowTelemetryCollection: false
+    
+    - task: TerraformCLI@2
+      inputs:
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
+        allowTelemetryCollection: false
+    
+
+
+- stage: DeployAKSCluster
+  jobs:
+    - deployment: DeployAKSCluster
+      pool:
+       vmImage: ubuntu-latest
+      environment: dev
+      strategy:
+       runOnce:
+         deploy:
+          steps:
+            - task: TerraformCLI@2
+              inputs:
+                command: 'init'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
+                backendType: 'azurerm'
+                backendServiceArm: 'rakshitha-azure-connection'
+                backendAzureRmResourceGroupName: 'test_tarun_rg'
+                backendAzureRmStorageAccountName: 'testtarunstorageaccount'
+                backendAzureRmContainerName: 'test-tarun-container'
+                backendAzureRmKey: 'tarun-test-app-service.terraform.tfstate'
+                allowTelemetryCollection: true
+            
+            - task: TerraformCLI@2
+              inputs:
+                command: 'plan'
+                workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
+                environmentServiceName: 'rakshitha-azure-connection'
+                allowTelemetryCollection: false
+            
+            - task: TerraformCLI@2
+              inputs:
+                command: 'apply'
+                workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
+                environmentServiceName: 'rakshitha-azure-connection'
+                allowTelemetryCollection: false
+
+             
+
+
+    
+    
+    
+
+  

@@ -54,7 +54,7 @@ stages:
             - task: TerraformCLI@2
               inputs:
                 command: 'init'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
+                workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'rakshitha-azure-connection'
                 backendAzureRmResourceGroupName: 'test_tarun_rg'

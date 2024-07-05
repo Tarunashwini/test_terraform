@@ -27,9 +27,9 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
         backendType: 'azurerm'
         backendServiceArm: 'rakshitha-azure-connection'
-        backendAzureRmResourceGroupName: 'test_tarun_rg'
-        backendAzureRmStorageAccountName: 'testtarunstorageaccount'
-        backendAzureRmContainerName: 'test-tarun-container'
+        backendAzureRmResourceGroupName: 'rg-storage-accounts-1'
+        backendAzureRmStorageAccountName: 'tfstorageaccountbhanu'
+        backendAzureRmContainerName: 'test-tarun-tfstatefiles'
         backendAzureRmKey: 'tarun-test-app-service.terraform.tfstate'
         allowTelemetryCollection: false
     

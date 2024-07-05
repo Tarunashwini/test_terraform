@@ -26,7 +26,7 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
         backendType: 'azurerm'
-        backendServiceArm: 'AZure -rakshitha-Con'
+        backendServiceArm: 'terraform-aks-azurerm-svc-con'
         backendAzureRmResourceGroupName: 'rg-storage-accounts-1'
         backendAzureRmStorageAccountName: 'tfstorageaccountbhanu'
         backendAzureRmContainerName: 'test-tarun-tfstatefiles'
@@ -56,7 +56,7 @@ stages:
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
                 backendType: 'azurerm'
-                backendServiceArm: 'AZure -rakshitha-Con'
+                backendServiceArm: 'terraform-aks-azurerm-svc-con'
                 backendAzureRmResourceGroupName: 'test_tarun_rg'
                 backendAzureRmStorageAccountName: 'testtarunstorageaccount'
                 backendAzureRmContainerName: 'test-tarun-container'
@@ -67,14 +67,14 @@ stages:
               inputs:
                 command: 'plan'
                 workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
-                environmentServiceName: 'rakshitha-azure-connection'
+                environmentServiceName: 'terraform-aks-azurerm-svc-con'
                 allowTelemetryCollection: false
             
             - task: TerraformCLI@2
               inputs:
                 command: 'apply'
                 workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
-                environmentServiceName: 'rakshitha-azure-connection'
+                environmentServiceName: 'terraform-aks-azurerm-svc-con'
                 allowTelemetryCollection: false
 
              

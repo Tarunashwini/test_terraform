@@ -25,8 +25,8 @@ stages:
       inputs:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/Test_Terraform_manifests'
-        #backendType: 'azurerm'
-        #backendServiceArm: 'rakshitha-azure-connection'
+        backendType: 'azurerm'
+        backendServiceArm: 'rakshitha-azure-connection'
         #backendAzureRmResourceGroupName: 'rg-storage-accounts-1'
         #backendAzureRmStorageAccountName: 'tfstorageaccountbhanu'
         #backendAzureRmContainerName: 'test-tarun-tfstatefiles'
@@ -55,8 +55,8 @@ stages:
               inputs:
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/Terraform-manifest-out'
-                #backendType: 'azurerm'
-                #backendServiceArm: 'rakshitha-azure-connection'
+                backendType: 'azurerm'
+                backendServiceArm: 'rakshitha-azure-connection'
                 #backendAzureRmResourceGroupName: 'test_tarun_rg'
                 #backendAzureRmStorageAccountName: 'testtarunstorageaccount'
                 #backendAzureRmContainerName: 'test-tarun-container'
